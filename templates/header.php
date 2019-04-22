@@ -16,7 +16,7 @@
 <nav class="navbar navbar-default" style="background:white;">
 <div class="container-fluid">
   <div class="navbar-header">
-    <a class="navbar-brand"style="color:darkorange;padding-left:40px;font-size:30px;" href="#">Ninja Pizza</a>
+    <a class="navbar-brand"style="color:darkorange;padding-left:40px;font-size:30px;" href="index.php">Ninja Pizza</a>
   </div>
   <ul class="nav navbar-nav navbar-right">
 <li>

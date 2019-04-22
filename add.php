@@ -1,10 +1,15 @@
 
 <?php
+
+//store the errors in variable
+$errors=['email'=>'','title'=>'', 'ingredients'=>''];
+$email=$title=$ingredients='';
 //check if the form has been submited
 if (isset($_POST['submit'])) {
   // email, title , ingredients are required
   if(empty($_POST['email'])){
-    echo "Email  is required</br>";
+    $errors['email']= "Email  is required</br>";
+  //  echo $errors['email'];
   }
   else{
     //validate that the email is required
@@ -12,15 +17,41 @@ if (isset($_POST['submit'])) {
     $email=$_POST["email"];
     if(!filter_var($email,FILTER_VALIDATE_EMAIL)){
       //if not email syntax
-      echo "email must be a valid email address";
+    $errors['title']= "email must be a valid email address";
     }
   }
+
   if(empty($_POST['title'])){
-    echo "Tiltle  is required</br>";
+    $errors['title']= "Tiltle  is required</br>";
   }
-  if(empty($_POST['ingRedients'])){
-    echo "Ingredients  is required</br>";
+  else{
+    //if title not empty check if the title is validate
+    //use reguler expression
+    $title=$_POST["title"];
+    if(!preg_match('/^[a-zA-z\s]+$/',$title)){
+
+    $errors['title']= "Title must be letters and spaces only</br>";
+    }
   }
+  if(empty($_POST['ingredients'])){
+    $errors['ingredients']="Ingredients  is required</br>";
+  }
+  else{
+    //if title not empty check if the title is validate
+    //use reguler expression
+    $ingredients=$_POST['ingredients'];
+    if(!preg_match('/^([a-zA-Z\s]+)(,\s*[a-zA-Z\s]*)*$/',$ingredients)){
+
+    $errors['ingredients']= "Ingredients must be letters and spaces only</br>";
+    }
+  }
+  //if there is no error in the form redirect the user to main page "index.php"
+  //array_filter($errors), if there no errprs return false
+
+if(!array_filter($errors)){
+  header('Location:index.php');
+}
+
 }
 
 
@@ -38,20 +69,26 @@ if (isset($_POST['submit'])) {
 <form  action="add.php" method="POST" style="background-color:white;padding:20px;">
 <div class="form-group">
  <label >Your Email:</label>
- <input type="text" name="email" class="form-control" value="">
-
+ <input type="text" name="email" class="form-control" value="<?php echo $email ?>">
+ <div class=""style="color:red;">
+ <?php echo $errors['email']; ?>
+ </div>
 </div>
 <div class="form-group">
  <label >Pizza title:</label>
- <input type="text" name="title" class="form-control" value="">
-
+ <input type="text" name="title" class="form-control" value="<?php echo $title ?>">
+<div class=""style="color:red;">
+<?php echo $errors['title']; ?>
+</div>
 </div>
 
 <div class="form-group">
 
  <label >Ingredients:</label>
- <input type="text" name="ingredients"  class="form-control" value="">
-
+ <input type="text" name="ingredients"  class="form-control" value="<?php echo $ingredients ?>">
+ <div class=""style="color:red;">
+ <?php echo $errors['ingredients']; ?>
+ </div>
 </div>
 <div style="width: 15%;
  margin: 10px auto;" >
