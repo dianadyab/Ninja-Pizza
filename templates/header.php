@@ -1,4 +1,9 @@
 <head>
+  <style media="screen">
+    .pizza{
+      margin-top: -50px;
+    }
+  </style>
   <meta charset="utf-8">
   <title>Ninja Pizza</title>
   <!-- Latest compiled and minified CSS -->

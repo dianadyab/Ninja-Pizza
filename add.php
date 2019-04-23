@@ -1,6 +1,6 @@
 
 <?php
-
+include('config/db.php');
 //store the errors in variable
 $errors=['email'=>'','title'=>'', 'ingredients'=>''];
 $email=$title=$ingredients='';
@@ -49,7 +49,24 @@ if (isset($_POST['submit'])) {
   //array_filter($errors), if there no errprs return false
 
 if(!array_filter($errors)){
-  header('Location:index.php');
+  // save the data in database email,title,Ingredients
+  //escape variable for security
+$email=mysqli_real_escape_string($conn,$_POST['email']);
+$title=mysqli_real_escape_string($conn,$_POST['title']);
+$ingredients=mysqli_real_escape_string($conn,$_POST['ingredients']);
+
+// create sql
+$sql="INSERT INTO pizzas(title,email,ingredients) VALUES('$title','$email','$ingredients')";
+//save to db
+if(mysqli_query($conn,$sql)){
+  //success then redirect user to index page
+  header('Location:index.php');//redirect user to main page
+}
+else{
+  //error
+  echo 'query error:'. mysqli_error($conn);
+}
+
 }
 
 }
